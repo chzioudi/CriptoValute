@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crypto Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#e5e7eb ;
+      color: #0f172a;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: #020617;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      border-radius: 4px;
+      padding: 20px;
+      color: #e5e7eb;
+      height: 100px;
+      text-align: center;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+    }
+
+    .symbol {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #aee608;
+    }
+
+    .updated {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Crypto Dashboard</h1>
+
+  <div class="container">
+    <div class="card">
+      <div class="symbol">Bitcoin (BTC)</div>
+      <div class="price" id="btc">--</div>
+    </div>
+
+    <div class="card">
+      <div class="symbol">Ethereum (ETH)</div>
+      <div class="price" id="eth">--</div>
+    </div>
+
+    <div class="card">
+      <div class="symbol">Solana (SOL)</div>
+      <div class="price" id="sol">--</div>
+    </div>
+
+    <div class="card">
+      <div class="symbol">DogeCoin</div>
+      <div class="price" id="doge">--</div>
+    </div>
+    <div class="card">
+      <div class="symbol">ChainLink</div>
+      <div class="price" id="bnb">--</div>
+    </div>
+    
+    <div class="card">
+      <div class="symbol">Sui</div>
+      <div class="price" id="sui">--</div>
+    </div>
+  </div>
+
+  <footer>
+    Dati forniti da api.coingecko.com 
+  </footer>
+
+  <script>
+    async function caricaPrezzi() {
+      try {
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,dogecoin,chainlink,sui&vs_currencies=usd"
+        );
+        const data = await response.json();
+         console.log(data)
+        document.getElementById("btc").innerText = `$  ${data.bitcoin.usd}`;
+        document.getElementById("eth").innerText = "$ " + data.ethereum.usd;
+        document.getElementById("sol").innerText = "$ " + data.solana.usd;
+        document.getElementById("doge").innerText = "$ " + data.dogecoin.usd;
+        document.getElementById("bnb").innerText = "$ " + data.chainlink.usd;
+        document.getElementById("sui").innerText = `$  ${data.sui.usd}`;
+      } catch (error) {
+        console.error("Errore nel caricamento dati", error);
+      }
+    }
+
+    caricaPrezzi();
+    setInterval(caricaPrezzi, 70000); 
+  </script>
+
+</body>
+</html>
