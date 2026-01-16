@@ -1,1 +1,1 @@
-imple web app to get cryptocurrency prices
+Simple web app to get cryptocurrency prices
